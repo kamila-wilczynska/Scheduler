@@ -75,45 +75,42 @@ const App = () => {
     setCurrentViewName(viewName);
   }, []);
 
-  const onCommitChanges = useCallback(
-    async ({ added, changed, deleted }) => {
-      if (added) {
-        try {
-          const newEvent = {
-            title: added.title || "Nowe wydarzenie",
-            startDate: added.startDate,
-            endDate: added.endDate,
-            location: added.location || "No location",
-          };
-          await addEvent(newEvent);
-          const events = await fetchEvents();
-          setData(events);
-        } catch (error) {
-          console.error("Error adding event:", error);
-        }
+  const onCommitChanges = useCallback(async ({ added, changed, deleted }) => {
+    if (added) {
+      try {
+        const newEvent = {
+          title: added.title || "Nowe wydarzenie",
+          startDate: added.startDate,
+          endDate: added.endDate,
+          location: added.location || "No location",
+        };
+        await addEvent(newEvent);
+        const events = await fetchEvents();
+        setData(events);
+      } catch (error) {
+        console.error("Error adding event:", error);
       }
-      if (changed) {
-        try {
-          const changedId = Object.keys(changed)[0];
-          await updateEvent(changedId, changed[changedId]);
-          const events = await fetchEvents();
-          setData(events);
-        } catch (error) {
-          console.error("Error updating event:", error);
-        }
+    }
+    if (changed) {
+      try {
+        const changedId = Object.keys(changed)[0];
+        await updateEvent(changedId, changed[changedId]);
+        const events = await fetchEvents();
+        setData(events);
+      } catch (error) {
+        console.error("Error updating event:", error);
       }
-      if (deleted !== undefined) {
-        try {
-          await deleteEvent(deleted);
-          const events = await fetchEvents();
-          setData(events);
-        } catch (error) {
-          console.error("Error deleting event:", error);
-        }
+    }
+    if (deleted !== undefined) {
+      try {
+        await deleteEvent(deleted);
+        const events = await fetchEvents();
+        setData(events);
+      } catch (error) {
+        console.error("Error deleting event:", error);
       }
-    },
-    [data]
-  );
+    }
+  }, []);
 
   return (
     <StyledPaper>
