@@ -1,5 +1,5 @@
 [build]
-command = "NODE_OPTIONS=--openssl-legacy-provider npm install --legacy-peer-deps && npm run build"
+command = npm install --legacy-peer-deps && npm run build
 
 
 [build.environment]
