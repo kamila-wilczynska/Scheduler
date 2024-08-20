@@ -1,5 +1,6 @@
 import "./App.css";
 import Scheduler from "./components/Scheduler";
+import React from "react";
 
 function App() {
   return (
